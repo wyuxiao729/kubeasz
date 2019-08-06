@@ -1,3 +1,11 @@
+- name: 获取是否已经安装containerd
+  shell: 'systemctl status containerd|grep Active || echo "NOT FOUND"'
+  register: containerd_status
+
+- name: fail info1
+  fail: msg="Containerd already installed!"
+  when: '"running" in containerd_status.stdout'
+
 - name: 获取是否运行名为'kubeasz'的容器
   shell: 'systemctl status docker|grep Active && docker ps|grep kubeasz || echo "NOT FOUND"'
   register: install_info

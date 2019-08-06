@@ -1,4 +1,4 @@
-# dns 自动安装，可选"coredns"和“kubedns”
+# dns 自动安装，'dns_backend'可选"coredns"和“kubedns”
 dns_install: "yes"
 dns_backend: "coredns"
 kubednsVer: "1.14.13"
@@ -13,26 +13,24 @@ dns_offline: "{%- if dns_backend == 'coredns' -%} \
 
 # metric server 自动安装
 metricsserver_install: "yes"
-metricsVer: "v0.3.2"
+metricsVer: "v0.3.3"
 metricsserver_offline: "metrics-server_{{ metricsVer }}.tar"
 
 # dashboard 自动安装
+# 现阶段 dashboard 获取metrics仍旧依赖于heapster，因此需连带安装heapster
 dashboard_install: "yes"
 dashboardVer: "v1.10.1"
 dashboard_offline: "dashboard_{{ dashboardVer }}.tar"
+heapsterVer: "v1.5.4"
+heapster_offline: "heapster_{{ heapsterVer }}.tar"
 
 # ingress 自动安装，可选 "traefik" 和 "nginx-ingress"
-ingress_install: "no"
+ingress_install: "yes"
 ingress_backend: "traefik"
-traefikVer: "v1.7.11"
+traefikVer: "v1.7.12"
 nginxingVer: "0.21.0"
 traefik_offline: "traefik_{{ traefikVer }}.tar"
 nginx_ingress_offline: "nginx_ingress_{{ nginxingVer }}.tar"
-
-# heapster 自动安装
-heapster_install: "no"
-heapsterVer: "v1.5.4"
-heapster_offline: "heapster_{{ heapsterVer }}.tar"
 
 # metallb 自动安装
 metallb_install: "no"
