@@ -61,6 +61,7 @@ yum install python -y
 # Ubuntu 16.04 
 apt-get install git python-pip -y
 # CentOS 7
+yum -y install epel-release
 yum install git python-pip -y
 # pip安装ansible(国内如果安装太慢可以直接用pip阿里云加速)
 #pip install pip --upgrade
