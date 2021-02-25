@@ -53,24 +53,22 @@ yum update
 yum install python -y
 ```
 
-### 3.在ansible控制端安装及准备ansible
+### 3.在部署节点安装ansible及准备ssh免密登陆
 
-- 3.1 pip 安装 ansible（如果 Ubuntu pip报错，请看[附录](00-planning_and_overall_intro.md#Appendix)）
+- 3.1 安装ansible (也可以使用容器化运行kubeasz，已经预装好ansible)
 
 ``` bash
-# Ubuntu 16.04 
-apt-get install git python-pip -y
-# CentOS 7
-yum -y install epel-release
-yum install git python-pip -y
+# 注意pip 21.0以后不再支持python2和python3.5，需要如下安装
+# To install pip for Python 2.7 install it from https://bootstrap.pypa.io/2.7/ :
+curl -O https://bootstrap.pypa.io/2.7/get-pip.py
+python get-pip.py
+python -m pip install --upgrade "pip < 21.0"
+ 
 # pip安装ansible(国内如果安装太慢可以直接用pip阿里云加速)
-#pip install pip --upgrade
-#pip install ansible==2.6.12
-pip install pip --upgrade -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-pip install ansible==2.6.12 -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+pip install ansible -i https://mirrors.aliyun.com/pypi/simple/
 ```
 
-- 3.2 在ansible控制端配置免密码登陆
+- 3.2 在ansible控制端配置免密码登录
 
 ``` bash
 # 更安全 Ed25519 算法
@@ -80,6 +78,7 @@ ssh-keygen -t rsa -b 2048 -N '' -f ~/.ssh/id_rsa
 
 ssh-copy-id $IPs #$IPs为所有节点地址包括自身，按照提示输入yes 和root密码
 ```
+
 
 ### 4.在ansible控制端编排k8s安装
 
